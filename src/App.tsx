@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Vehicle } from 'interfaces';
-import { Card, Container } from './components';
+import { Card, Container, CardList } from './components';
 
 function App() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -15,10 +15,17 @@ function App() {
         query: `
           query {
             vehicles {
+              id
               title
-              typeName
+              type {
+                title
+                icons {
+                  default
+                }
+              }
               nation {
-                name
+                title
+                color
                 icons {
                   small
                 }
@@ -27,7 +34,6 @@ function App() {
               description
               icons {
                 medium
-                large
               }
             }
           }
@@ -37,25 +43,39 @@ function App() {
       .then((response: Response) => response.json())
       .then((result) => {
         console.log(result.data.vehicles);
-        setVehicles(result.data.vehicles.slice(0, 20));
+        setVehicles(
+          result.data.vehicles
+            // .filter(
+            //   (item: any) =>
+            //     item.nation.title !== 'Japan' &&
+            //     item.nation.title !== 'U.S.A.' &&
+            //     item.nation.title !== 'U.S.S.R.' &&
+            //     item.nation.title !== 'Germany' &&
+            //     item.nation.title !== 'U.K.' &&
+            //     item.nation.title !== 'Pan-Asia' &&
+            //     item.nation.title !== 'Italy' &&
+            //     item.nation.title !== 'Commonwealth' &&
+            //     item.nation.title !== 'Pan-America' &&
+            //     item.nation.title !== 'Europe' &&
+            //     item.nation.title !== 'The Netherlands' &&
+            //     item.nation.title !== 'Spain' &&
+            //     item.nation.title !== 'France'
+            // )
+            .slice(0, 24)
+        );
       });
   }, []);
 
   return (
-    <Container>
-      {vehicles.map((vehicle) => (
-        <Card
-          key={vehicle.title}
-          title={vehicle.title}
-          typeName={vehicle.typeName}
-          nationName={vehicle.nation.name}
-          nationIcon={vehicle.nation.icons.small}
-          level={vehicle.level}
-          description={vehicle.description}
-          icon={vehicle.icons.medium}
-        />
-      ))}
-    </Container>
+    <div className="bg-sky-700 text-sky-200 min-h-screen">
+      <Container>
+        <CardList>
+          {vehicles.map((vehicle) => (
+            <Card key={vehicle.id} vehicle={vehicle} />
+          ))}
+        </CardList>
+      </Container>
+    </div>
   );
 }
 
