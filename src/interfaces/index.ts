@@ -1,5 +1,5 @@
 export interface Nation {
-  // name: string;
+  name: string;
   title: string;
   color: string;
   icons: {
@@ -8,7 +8,7 @@ export interface Nation {
 }
 
 export interface Type {
-  // name: string;
+  name: string;
   title: string;
   icons: {
     default: string;
