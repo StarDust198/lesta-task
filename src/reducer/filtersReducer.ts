@@ -1,40 +1,9 @@
-import { Nation, Type } from 'interfaces';
-
-export interface FiltersParams {
-  nations: Omit<Nation, 'icons' | 'colors'>[];
-  types: Omit<Type, 'icons'>[];
-  minLevel: number;
-  maxLevel: number;
-}
-
-export interface FiltersGroup {
-  [key: string]: boolean;
-}
-
-export interface FiltersState {
-  nations: FiltersGroup;
-  types: FiltersGroup;
-  min: number;
-  max: number;
-}
-
-export type FiltersKind = 'nations' | 'types';
-
-export type FiltersAction =
-  | {
-      type: 'switchFilter';
-      payload: {
-        kind: FiltersKind;
-        name: string;
-      };
-    }
-  | {
-      type: 'switchAllFilters';
-      payload: {
-        kind: FiltersKind;
-        value: boolean;
-      };
-    };
+import {
+  FiltersAction,
+  FiltersGroup,
+  FiltersParams,
+  FiltersState,
+} from '../interfaces';
 
 export const getDefaultState = ({
   nations,
@@ -94,6 +63,26 @@ export const filtersReducer = (state: FiltersState, action: FiltersAction) => {
         ...state,
         [kind]: newFilters,
       };
+    }
+
+    case 'moveMin': {
+      return {
+        ...state,
+        min: action.payload,
+        max: Math.max(action.payload, state.max),
+      };
+    }
+
+    case 'moveMax': {
+      return {
+        ...state,
+        max: action.payload,
+        min: Math.min(action.payload, state.min),
+      };
+    }
+
+    case 'resetFilters': {
+      return getDefaultState(action.payload);
     }
 
     default:

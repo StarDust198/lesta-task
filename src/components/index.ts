@@ -5,3 +5,5 @@ export * from './Filters';
 export * from './FilterOption';
 export * from './FilterRange';
 export * from './BorderedDiv';
+export * from './Pagination';
+export * from './Footer';
