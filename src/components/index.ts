@@ -7,3 +7,5 @@ export * from './FilterRange';
 export * from './BorderedDiv';
 export * from './Pagination';
 export * from './Footer';
+export * from './Layout';
+export * from './Loader';
