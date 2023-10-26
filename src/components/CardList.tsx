@@ -1,14 +1,15 @@
-import { FiltersState, Vehicle } from '../interfaces';
+import { Vehicle } from '../interfaces';
 import { Card, Pagination } from '.';
 import { useEffect, useState } from 'react';
+import { useFiltersContext } from '../hooks';
 
 type Props = {
   vehicles: Vehicle[];
-  filtersState: FiltersState;
 };
 
-export const CardList = ({ vehicles, filtersState }: Props) => {
+export const CardList = ({ vehicles }: Props) => {
   const [page, setPage] = useState(0);
+  const { state: filtersState } = useFiltersContext();
   useEffect(() => {
     setPage(0);
   }, [filtersState]);

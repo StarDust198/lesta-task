@@ -1,5 +1,5 @@
 import { Container } from '.';
-import { telegramIcon } from '../static/icons';
+import { telegramIcon } from '../assets';
 
 export const Footer = () => {
   return (

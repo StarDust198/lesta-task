@@ -1,6 +1,6 @@
-import { Dispatch } from 'react';
+import { useEffect } from 'react';
 import { BorderedDiv, FilterOption, FilterRange } from '../components';
-import { FiltersAction, FiltersParams, FiltersState } from '../interfaces';
+import { FiltersParams } from '../interfaces';
 import {
   moveMax,
   moveMin,
@@ -8,27 +8,24 @@ import {
   switchAllFilters,
   switchFilter,
 } from '../reducer';
+import { useFiltersContext } from '../hooks';
 
-type Props = {
-  state: FiltersState;
-  dispatch: Dispatch<FiltersAction>;
-} & FiltersParams;
+type Props = FiltersParams;
 
-export const Filters = ({
-  state,
-  dispatch,
-  nations,
-  types,
-  minLevel,
-  maxLevel,
-}: Props) => {
+export const Filters = ({ nations, types, minLevel, maxLevel }: Props) => {
+  const { state, dispatch } = useFiltersContext();
+
+  useEffect(() => {
+    dispatch(resetFilters({ nations, types, minLevel, maxLevel }));
+  }, [nations, types, minLevel, maxLevel, dispatch]);
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <BorderedDiv className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 before:content-['Nations']">
         <FilterOption
           title="All nations"
           name="nations"
-          checked={state.nations.nations}
+          checked={state.nations.nations || false}
           onChange={(e) =>
             dispatch(switchAllFilters('nations', e.currentTarget.checked))
           }
@@ -38,7 +35,7 @@ export const Filters = ({
             key={nation.name}
             name={nation.name}
             title={nation.title}
-            checked={state.nations[nation.name]}
+            checked={state.nations[nation.name] || false}
             onChange={() => dispatch(switchFilter('nations', nation.name))}
           />
         ))}
@@ -48,7 +45,7 @@ export const Filters = ({
         <FilterOption
           title="All types"
           name="types"
-          checked={state.types.types}
+          checked={state.types.types || false}
           onChange={(e) =>
             dispatch(switchAllFilters('types', e.currentTarget.checked))
           }
@@ -58,7 +55,7 @@ export const Filters = ({
             key={type.name}
             name={type.name}
             title={type.title}
-            checked={state.types[type.name]}
+            checked={state.types[type.name] || false}
             onChange={() => dispatch(switchFilter('types', type.name))}
           />
         ))}

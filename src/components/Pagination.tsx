@@ -1,4 +1,4 @@
-import { Chevron, DoubleChevron } from '../static/icons';
+import { Chevron, DoubleChevron } from '../assets';
 
 type Props = {
   currentPage: number;

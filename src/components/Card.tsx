@@ -45,7 +45,8 @@ export const Card = ({ vehicle }: Props) => {
       </div>
       <img className="h-32" src={vehicle.icons.medium} alt={vehicle.title} />
       <div className="text-sm">level {vehicle.level}</div>
-      <div className="p-4 text-center bg-gradient-to-r from-blue-900 to-sky-900 rounded shadow">
+      {/* <div className="p-4 text-center bg-gradient-to-r from-blue-900 to-sky-900 rounded shadow"> */}
+      <div className="p-4 text-center bg-blue-900 rounded shadow">
         <div ref={boxRef} className={`text-xs ${cut ? 'line-clamp-4' : ''}`}>
           {vehicle.description}
         </div>

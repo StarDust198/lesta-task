@@ -5,6 +5,13 @@ import {
   FiltersState,
 } from '../interfaces';
 
+export const mockState = () => ({
+  nations: {},
+  types: {},
+  min: 0,
+  max: 100,
+});
+
 export const getDefaultState = ({
   nations,
   types,

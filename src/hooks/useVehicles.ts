@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Nation, Type, Vehicle } from '../interfaces';
+import { URL, QUERY } from '../consts';
 
 export const useVehicles = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -23,41 +24,14 @@ export const useVehicles = () => {
     setMinLevel(Infinity);
     setMaxLevel(0);
 
-    fetch('https://vortex.korabli.su/api/graphql/glossary/', {
+    fetch(URL, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
       signal: controller.signal,
       body: JSON.stringify({
-        query: `
-          query {
-            vehicles {
-              id
-              title
-              type {
-                name
-                title
-                icons {
-                  default
-                }
-              }
-              nation {
-                name
-                title
-                color
-                icons {
-                  small
-                }
-              }
-              level
-              description
-              icons {
-                medium
-              }
-            }
-          }
-      `,
+        query: QUERY,
       }),
     })
       .then((response: Response) => response.json())
@@ -82,7 +56,18 @@ export const useVehicles = () => {
 
         return setVehicles(result.data.vehicles);
       })
-      .then(() => setLoading(false));
+      .then(() => setLoading(false))
+
+      // Catching abort controller error or re-throwing it
+      .catch((e: Error) => {
+        if (e.name === 'AbortError') {
+          console.log(
+            'The request was interrupted, possible reason - React strict mode'
+          );
+        } else {
+          throw e;
+        }
+      });
 
     return () => controller.abort();
   }, []);
