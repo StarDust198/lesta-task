@@ -1,15 +1,16 @@
-export interface Nation {
+export interface Group {
   name: string;
   title: string;
+}
+
+export interface Nation extends Group {
   color: string;
   icons: {
     small: string;
   };
 }
 
-export interface Type {
-  name: string;
-  title: string;
+export interface Type extends Group {
   icons: {
     default: string;
   };

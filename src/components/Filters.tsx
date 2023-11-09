@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
-import { BorderedDiv, FilterOption, FilterRange } from '../components';
+import { BorderedDiv, CheckboxSet, FilterRange } from '../components';
 import { FiltersParams } from '../interfaces';
-import {
-  moveMax,
-  moveMin,
-  resetFilters,
-  switchAllFilters,
-  switchFilter,
-} from '../reducer';
+import { moveMax, moveMin, resetFilters } from '../reducer';
 import { useFiltersContext } from '../hooks';
 
 type Props = FiltersParams;
@@ -21,45 +15,18 @@ export const Filters = ({ nations, types, minLevel, maxLevel }: Props) => {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <BorderedDiv className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 before:content-['Nations']">
-        <FilterOption
-          title="All nations"
-          name="nations"
-          checked={state.nations.nations || false}
-          onChange={(e) =>
-            dispatch(switchAllFilters('nations', e.currentTarget.checked))
-          }
-        />
-        {nations.map((nation) => (
-          <FilterOption
-            key={nation.name}
-            name={nation.name}
-            title={nation.title}
-            checked={state.nations[nation.name] || false}
-            onChange={() => dispatch(switchFilter('nations', nation.name))}
-          />
-        ))}
-      </BorderedDiv>
-
-      <BorderedDiv className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 before:content-['Classes']">
-        <FilterOption
-          title="All types"
-          name="types"
-          checked={state.types.types || false}
-          onChange={(e) =>
-            dispatch(switchAllFilters('types', e.currentTarget.checked))
-          }
-        />
-        {types.map((type) => (
-          <FilterOption
-            key={type.name}
-            name={type.name}
-            title={type.title}
-            checked={state.types[type.name] || false}
-            onChange={() => dispatch(switchFilter('types', type.name))}
-          />
-        ))}
-      </BorderedDiv>
+      <CheckboxSet
+        all="All nations"
+        groupName="nations"
+        items={nations}
+        className="before:content-['Nations']"
+      />
+      <CheckboxSet
+        all="All types"
+        groupName="types"
+        items={types}
+        className="before:content-['Classes']"
+      />
 
       <BorderedDiv className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 before:content-['Levels']">
         <FilterRange

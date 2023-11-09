@@ -9,3 +9,4 @@ export * from './Pagination';
 export * from './Footer';
 export * from './Layout';
 export * from './Loader';
+export * from './CheckboxSet';
