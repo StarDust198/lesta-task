@@ -1,15 +1,17 @@
+import { DEFAULT_MAX_STATE, DEFAULT_MIN_STATE } from '../consts';
 import {
   FiltersAction,
   FiltersGroup,
   FiltersParams,
   FiltersState,
 } from '../interfaces';
+import { mapQueryItems } from '../utils';
 
 export const mockState = () => ({
   nations: {},
   types: {},
-  min: 0,
-  max: 100,
+  min: DEFAULT_MIN_STATE,
+  max: DEFAULT_MAX_STATE,
 });
 
 export const getDefaultState = ({
@@ -18,21 +20,11 @@ export const getDefaultState = ({
   minLevel,
   maxLevel,
 }: FiltersParams): FiltersState => {
-  const nationsState: { [key: string]: boolean } = {
-    nations: true,
-  };
-  const typesState: { [key: string]: boolean } = {
-    types: true,
-  };
-
-  nations.forEach((nation) => (nationsState[nation.name] = true));
-  types.forEach((type) => (typesState[type.name] = true));
-
   return {
     min: minLevel,
     max: maxLevel,
-    nations: nationsState,
-    types: typesState,
+    nations: mapQueryItems(nations, 'nations'),
+    types: mapQueryItems(types, 'types'),
   };
 };
 
@@ -42,7 +34,7 @@ export const filtersReducer = (state: FiltersState, action: FiltersAction) => {
       const { kind, name } = action.payload;
       const newFilters = {
         ...state[kind],
-        [action.payload.name]: !state[kind][name],
+        [action.payload.name]: state[kind][name],
       };
       delete newFilters[kind];
 

@@ -2,7 +2,7 @@ export const URL = 'https://vortex.korabli.su/api/graphql/glossary/';
 export const QUERY = `
           query {
             vehicles {
-              id
+              name
               title
               type {
                 name
@@ -27,3 +27,6 @@ export const QUERY = `
             }
           }
       `;
+
+export const DEFAULT_MIN_STATE = 1;
+export const DEFAULT_MAX_STATE = 5;

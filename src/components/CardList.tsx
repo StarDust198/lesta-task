@@ -30,7 +30,7 @@ export const CardList = ({ vehicles }: Props) => {
           filteredVehicles
             .slice(page * 12, page * 12 + 12)
             .map((vehicle: Vehicle) => (
-              <Card key={vehicle.id} vehicle={vehicle} />
+              <Card key={vehicle.name} vehicle={vehicle} />
             ))
         ) : (
           <p className="py-4 col-span-full">

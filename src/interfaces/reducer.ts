@@ -1,8 +1,8 @@
-import { Nation, Type } from '../interfaces';
+import { QueryItem } from '../interfaces';
 
 export interface FiltersParams {
-  nations: Omit<Nation, 'icons' | 'colors'>[];
-  types: Omit<Type, 'icons'>[];
+  nations: QueryItem[];
+  types: QueryItem[];
   minLevel: number;
   maxLevel: number;
 }

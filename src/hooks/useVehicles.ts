@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Nation, Type, Vehicle } from '../interfaces';
 import { fetchVehicles } from '../api';
+import { DEFAULT_MAX_STATE, DEFAULT_MIN_STATE } from '../consts';
 
 type VehiclesState = {
   vehicles: Vehicle[];
@@ -11,14 +12,14 @@ type VehiclesState = {
 };
 
 export const useVehicles = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [vehiclesState, setVehiclesState] = useState<VehiclesState>({
     vehicles: [],
     nations: [],
     types: [],
-    minLevel: Infinity,
-    maxLevel: 0,
+    minLevel: DEFAULT_MIN_STATE,
+    maxLevel: DEFAULT_MAX_STATE,
   });
 
   useEffect(() => {

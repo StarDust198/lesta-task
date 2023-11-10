@@ -1,4 +1,4 @@
-import { FiltersKind, Group } from '../interfaces';
+import { FiltersKind, QueryItem } from '../interfaces';
 import { useFiltersContext } from '../hooks';
 import { BorderedDiv, FilterOption } from '.';
 import { switchAllFilters, switchFilter } from '../reducer';
@@ -7,13 +7,13 @@ type Props = {
   className?: string;
   all: string;
   groupName: FiltersKind;
-  items: Group[];
+  items: QueryItem[];
 };
 
 export const CheckboxSet = ({
-  className = "before:content-['Nations']", // ""
-  all = 'All nations',
-  groupName = 'nations',
+  className = '',
+  all,
+  groupName,
   items,
 }: Props) => {
   const { state, dispatch } = useFiltersContext();
