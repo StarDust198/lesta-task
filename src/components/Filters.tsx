@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { BorderedDiv, CheckboxSet, FilterRange } from '../components';
 import { FiltersParams } from '../interfaces';
 import { moveMax, moveMin, resetFilters } from '../reducer';
@@ -8,10 +7,6 @@ type Props = FiltersParams;
 
 export const Filters = ({ nations, types, minLevel, maxLevel }: Props) => {
   const { state, dispatch } = useFiltersContext();
-
-  useEffect(() => {
-    dispatch(resetFilters({ nations, types, minLevel, maxLevel }));
-  }, [nations, types, minLevel, maxLevel, dispatch]);
 
   return (
     <div className="flex flex-col gap-4 p-4">

@@ -7,7 +7,9 @@ function App() {
     useVehicles();
 
   return (
-    <FiltersContextProvider>
+    <FiltersContextProvider
+      {...{ vehicles, nations, types, minLevel, maxLevel }}
+    >
       <Layout>
         {loading ? (
           <Loader />
@@ -19,7 +21,7 @@ function App() {
               minLevel={minLevel}
               maxLevel={maxLevel}
             />
-            <CardList vehicles={vehicles} />
+            <CardList />
           </>
         )}
       </Layout>

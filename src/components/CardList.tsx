@@ -3,25 +3,16 @@ import { Card, Pagination } from '.';
 import { useEffect, useState } from 'react';
 import { useFiltersContext } from '../hooks';
 
-type Props = {
-  vehicles: Vehicle[];
-};
-
-export const CardList = ({ vehicles }: Props) => {
+export const CardList = () => {
   const [page, setPage] = useState(0);
-  const { state: filtersState } = useFiltersContext();
-  useEffect(() => {
-    setPage(0);
-  }, [filtersState]);
-
-  const filteredVehicles = vehicles.filter(
-    (vehicle) =>
-      filtersState.nations[vehicle.nation.name] &&
-      filtersState.types[vehicle.type.name] &&
-      vehicle.level >= filtersState.min &&
-      vehicle.level <= filtersState.max
-  );
+  const { filteredVehicles } = useFiltersContext();
   const totalPages = Math.floor(filteredVehicles.length / 12);
+
+  useEffect(() => {
+    if (totalPages < page) setPage(totalPages);
+  }, [totalPages, page]);
+
+  console.log('list render', totalPages, page, filteredVehicles);
 
   return (
     <div className="flex flex-col gap-4">

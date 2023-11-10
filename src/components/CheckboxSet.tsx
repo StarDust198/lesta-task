@@ -23,6 +23,7 @@ export const CheckboxSet = ({
       className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 ${className}`}
     >
       <FilterOption
+        key={groupName}
         title={all}
         name={groupName}
         checked={state[groupName][groupName] || false}

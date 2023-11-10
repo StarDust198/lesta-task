@@ -32,9 +32,10 @@ export const filtersReducer = (state: FiltersState, action: FiltersAction) => {
   switch (action.type) {
     case 'switchFilter': {
       const { kind, name } = action.payload;
+
       const newFilters = {
         ...state[kind],
-        [action.payload.name]: state[kind][name],
+        [name]: !state[kind][name],
       };
       delete newFilters[kind];
 
